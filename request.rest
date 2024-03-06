@@ -1,0 +1,19 @@
+###
+
+GET http://localhost:3000/student
+
+###
+
+POST http://localhost:3000/student
+
+
+###
+
+PUT http://localhost:3000/student
+
+
+###
+
+DELETE http://localhost:3000/student
+
+```
