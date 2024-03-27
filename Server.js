@@ -7,6 +7,6 @@ init().then((app) => {
     );
     // this is my comment
     console.log("Hello World");
-    console.log("edited...9999");
+    console.log("edited...");
   });
 });
