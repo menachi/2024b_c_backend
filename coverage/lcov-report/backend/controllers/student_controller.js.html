@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">55.17% </span>
+                <span class="strong">20.68% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>16/29</span>
+                <span class='fraction'>6/29</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">75% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>3/4</span>
+                <span class='fraction'>0/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/4</span>
+                <span class='fraction'>0/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">55.17% </span>
+                <span class="strong">20.68% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>16/29</span>
+                <span class='fraction'>6/29</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -126,28 +126,28 @@
 <a name='L61'></a><a href='#L61'>61</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -185,29 +185,29 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const Student = require("../models/student_model");
 &nbsp;
-const getStudent = async (req, res) =&gt; {
-  try {
+const getStudent = <span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {
+<span class="cstat-no" title="statement not covered" >  try {</span>
     var students;
-    if (req.params.id != null) {
-      students = await Student.findById(req.params.id);
+<span class="cstat-no" title="statement not covered" >    if (req.params.id != null) {</span>
+<span class="cstat-no" title="statement not covered" >      students = await Student.findById(req.params.id);</span>
     } else {
-      <span class="missing-if-branch" title="if path not taken" >I</span>if (req.query.name != null) {
+<span class="cstat-no" title="statement not covered" >      if (req.query.name != null) {</span>
 <span class="cstat-no" title="statement not covered" >        students = await Student.find({ name: req.query.name });</span>
       } else {
-        students = await Student.find();
+<span class="cstat-no" title="statement not covered" >        students = await Student.find();</span>
       }
     }
-    res.status(200).send(students);
+<span class="cstat-no" title="statement not covered" >    res.status(200).send(students);</span>
   } catch (err) {
 <span class="cstat-no" title="statement not covered" >    res.status(500).send(err.message);</span>
   }
 };
 &nbsp;
-const postStudent = async (req, res) =&gt; {
-  const student = req.body;
-  try {
-    const newStudent = await Student.create(student);
-    res.status(201).json(newStudent);
+const postStudent = <span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {
+  const student = <span class="cstat-no" title="statement not covered" >req.body;</span>
+<span class="cstat-no" title="statement not covered" >  try {</span>
+    const newStudent = <span class="cstat-no" title="statement not covered" >await Student.create(student);</span>
+<span class="cstat-no" title="statement not covered" >    res.status(201).json(newStudent);</span>
   } catch (err) {
 <span class="cstat-no" title="statement not covered" >    res.status(500).send(err.message);</span>
   }
@@ -250,7 +250,7 @@ module.exports = {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-03-20T19:48:46.288Z
+                at 2024-03-27T17:45:27.594Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
