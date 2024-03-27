@@ -5,9 +5,6 @@ init().then((app) => {
     console.log(
       "Example app listening at http://localhost:" + process.env.PORT
     );
-    // this is my comment
-    console.log("Hello World ddddd");
-    console.log("edited... rfwqefqwefqwefd");
-    console.log("Hello World ddddd");
   });
 });
+s;
