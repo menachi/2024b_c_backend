@@ -16,12 +16,13 @@ const init = () => {
         const db = mongoose_1.default.connection;
         db.on("error", (error) => console.error(error));
         db.once("open", () => console.log("connected to database"));
-        mongoose_1.default.connect(process.env.DATABASE_URL);
-        app.use(body_parser_1.default.urlencoded({ extended: true }));
-        app.use(body_parser_1.default.json());
-        app.use("/student", student_route_1.default);
-        app.use("/post", post_route_1.default);
-        resolve(app);
+        mongoose_1.default.connect(process.env.DATABASE_URL).then(() => {
+            app.use(body_parser_1.default.urlencoded({ extended: true }));
+            app.use(body_parser_1.default.json());
+            app.use("/student", student_route_1.default);
+            app.use("/post", post_route_1.default);
+            resolve(app);
+        });
     });
     return promise;
 };

@@ -6,13 +6,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const router = express_1.default.Router();
 const post_controller_1 = __importDefault(require("../controllers/post_controller"));
-router.get("/", post_controller_1.default.get);
-router.get("/:id", post_controller_1.default.get);
+router.get("/", post_controller_1.default.get.bind(post_controller_1.default));
+router.get("/:id", post_controller_1.default.get.bind(post_controller_1.default));
 //post
-router.post("/", post_controller_1.default.post);
+router.post("/", post_controller_1.default.post.bind(post_controller_1.default));
 //put
-router.put("/", post_controller_1.default.put);
+router.put("/", post_controller_1.default.put.bind(post_controller_1.default));
 //delete
-router.delete("/", post_controller_1.default.deletePost);
+router.delete("/", post_controller_1.default.delete.bind(post_controller_1.default));
 exports.default = router;
 //# sourceMappingURL=post_route.js.map

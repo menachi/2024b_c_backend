@@ -13,13 +13,14 @@ const init = () => {
     const db = mongoose.connection;
     db.on("error", (error) => console.error(error));
     db.once("open", () => console.log("connected to database"));
-    //mongoose.connect(process.env.DATABASE_URL);
-    app.use(bodyParser.urlencoded({ extended: true }));
-    app.use(bodyParser.json());
+    mongoose.connect(process.env.DATABASE_URL).then(() => {
+      app.use(bodyParser.urlencoded({ extended: true }));
+      app.use(bodyParser.json());
 
-    app.use("/student", studentRoute);
-    app.use("/post", postRoute);
-    resolve(app);
+      app.use("/student", studentRoute);
+      app.use("/post", postRoute);
+      resolve(app);
+    });
   });
   return promise;
 };

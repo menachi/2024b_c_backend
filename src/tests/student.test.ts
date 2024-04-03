@@ -2,6 +2,7 @@ import request from "supertest";
 import init from "../App";
 import mongoose from "mongoose";
 import Student from "../models/student_model";
+import { App } from "supertest/types";
 
 const testStudent = {
   _id: "12345",
@@ -9,7 +10,7 @@ const testStudent = {
   age: 20,
 };
 
-let app;
+let app: App;
 beforeAll(async () => {
   app = await init();
   console.log("Before all");
