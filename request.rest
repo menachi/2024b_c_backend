@@ -53,3 +53,16 @@ Content-Type: application/json
 
 GET http://localhost:3000/post
 
+
+
+###
+
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+    "email": "Moshe",
+    "password": "22"
+}
+
+
