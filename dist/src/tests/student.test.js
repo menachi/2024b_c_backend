@@ -34,7 +34,7 @@ beforeAll(() => __awaiter(void 0, void 0, void 0, function* () {
     yield user_model_1.default.deleteMany({ "email": user.email });
     yield (0, supertest_1.default)(app).post("/auth/register").send(user);
     const res = yield (0, supertest_1.default)(app).post("/auth/login").send(user);
-    user.token = res.body.token;
+    user.accessToken = res.body.accessToken;
 }));
 afterAll(() => __awaiter(void 0, void 0, void 0, function* () {
     yield mongoose_1.default.connection.close();
@@ -43,14 +43,14 @@ describe("Student Tests", () => {
     test("Test student get", () => __awaiter(void 0, void 0, void 0, function* () {
         const res = yield (0, supertest_1.default)(app)
             .get("/student")
-            .set("Authorization", "Bearer " + user.token);
+            .set("Authorization", "Bearer " + user.accessToken);
         expect(res.statusCode).toEqual(200);
         expect(res.body).toEqual([]);
     }));
     //test the post student api
     test("Test student post", () => __awaiter(void 0, void 0, void 0, function* () {
         const res = yield (0, supertest_1.default)(app).post("/student")
-            .set("Authorization", "Bearer " + user.token)
+            .set("Authorization", "Bearer " + user.accessToken)
             .send(testStudent);
         expect(res.statusCode).toEqual(201);
         expect(res.body.name).toEqual(testStudent.name);
@@ -61,7 +61,7 @@ describe("Student Tests", () => {
     test("Test student get by id", () => __awaiter(void 0, void 0, void 0, function* () {
         const res = yield (0, supertest_1.default)(app)
             .get("/student/" + testStudent._id)
-            .set("Authorization", "Bearer " + user.token);
+            .set("Authorization", "Bearer " + user.accessToken);
         expect(res.statusCode).toEqual(200);
         expect(res.body.name).toEqual(testStudent.name);
         expect(res.body.age).toEqual(testStudent.age);

@@ -14,7 +14,7 @@ const testStudent = {
 type TestUser = {
   email: string,
   password: string,
-  token?: string
+  accessToken?: string
 }
 
 const user: TestUser = {
@@ -30,7 +30,7 @@ beforeAll(async () => {
   await User.deleteMany({ "email": user.email });
   await request(app).post("/auth/register").send(user);
   const res = await request(app).post("/auth/login").send(user);
-  user.token = res.body.token;
+  user.accessToken = res.body.accessToken;
 });
 
 afterAll(async () => {
@@ -41,7 +41,7 @@ describe("Student Tests", () => {
   test("Test student get", async () => {
     const res = await request(app)
       .get("/student")
-      .set("Authorization", "Bearer " + user.token);
+      .set("Authorization", "Bearer " + user.accessToken);
     expect(res.statusCode).toEqual(200);
     expect(res.body).toEqual([]);
   });
@@ -49,7 +49,7 @@ describe("Student Tests", () => {
   //test the post student api
   test("Test student post", async () => {
     const res = await request(app).post("/student")
-      .set("Authorization", "Bearer " + user.token)
+      .set("Authorization", "Bearer " + user.accessToken)
       .send(testStudent);
     expect(res.statusCode).toEqual(201);
     expect(res.body.name).toEqual(testStudent.name);
@@ -61,7 +61,7 @@ describe("Student Tests", () => {
   test("Test student get by id", async () => {
     const res = await request(app)
       .get("/student/" + testStudent._id)
-      .set("Authorization", "Bearer " + user.token);
+      .set("Authorization", "Bearer " + user.accessToken);
     expect(res.statusCode).toEqual(200);
     expect(res.body.name).toEqual(testStudent.name);
     expect(res.body.age).toEqual(testStudent.age);

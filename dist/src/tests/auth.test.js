@@ -37,24 +37,69 @@ describe("Register Tests", () => {
     test("Login", () => __awaiter(void 0, void 0, void 0, function* () {
         const res = yield (0, supertest_1.default)(app).post("/auth/login").send(user);
         expect(res.statusCode).toEqual(200);
-        expect(res.body).toHaveProperty("token");
-        user.token = res.body.token;
+        expect(res.body).toHaveProperty("accessToken");
+        expect(res.body).toHaveProperty("refreshToken");
+        user.accessToken = res.body.accessToken;
+        user.refreshToken = res.body.refreshToken;
     }));
     test("Middleware", () => __awaiter(void 0, void 0, void 0, function* () {
         const res = yield (0, supertest_1.default)(app).get("/student").send();
         expect(res.statusCode).not.toEqual(200);
-        const res2 = yield (0, supertest_1.default)(app).get("/student").set("Authorization", "Bearer " + user.token).send();
+        const res2 = yield (0, supertest_1.default)(app).get("/student").set("Authorization", "Bearer " + user.accessToken).send();
         expect(res2.statusCode).toEqual(200);
-        yield (0, supertest_1.default)(app).post("/post").set("Authorization", "Bearer " + user.token).send({
+        yield (0, supertest_1.default)(app).post("/post").set("Authorization", "Bearer " + user.accessToken).send({
             "title": "Post Title",
             "message": "Post Content",
             "owner": "12345"
         });
         expect(res2.statusCode).toEqual(200);
     }));
-    test("Logout", () => __awaiter(void 0, void 0, void 0, function* () {
-        const res = yield (0, supertest_1.default)(app).get("/auth/logout").send();
+    jest.setTimeout(10000);
+    test("Refresh Token", () => __awaiter(void 0, void 0, void 0, function* () {
+        yield new Promise(r => setTimeout(r, 6000));
+        const res = yield (0, supertest_1.default)(app).get("/student").set("Authorization", "Bearer " + user.accessToken).send();
+        expect(res.statusCode).not.toEqual(200);
+        const res2 = yield (0, supertest_1.default)(app).get("/auth/refresh")
+            .set("Authorization", "Bearer " + user.refreshToken)
+            .send();
+        expect(res2.statusCode).toEqual(200);
+        expect(res2.body).toHaveProperty("accessToken");
+        expect(res2.body).toHaveProperty("refreshToken");
+        user.accessToken = res2.body.accessToken;
+        user.refreshToken = res2.body.refreshToken;
+        const res3 = yield (0, supertest_1.default)(app).get("/student").set("Authorization", "Bearer " + user.accessToken).send();
+        expect(res3.statusCode).toEqual(200);
+    }));
+    test("Refresh Token hacked", () => __awaiter(void 0, void 0, void 0, function* () {
+        const res = yield (0, supertest_1.default)(app).get("/auth/refresh")
+            .set("Authorization", "Bearer " + user.refreshToken)
+            .send();
         expect(res.statusCode).toEqual(200);
+        const newRefreshToken = res.body.refreshToken;
+        const res2 = yield (0, supertest_1.default)(app).get("/auth/refresh")
+            .set("Authorization", "Bearer " + user.refreshToken)
+            .send();
+        expect(res2.statusCode).not.toEqual(200);
+        const res3 = yield (0, supertest_1.default)(app).get("/auth/refresh")
+            .set("Authorization", "Bearer " + newRefreshToken)
+            .send();
+        expect(res3.statusCode).not.toEqual(200);
+    }));
+    test("Logout", () => __awaiter(void 0, void 0, void 0, function* () {
+        const res = yield (0, supertest_1.default)(app).post("/auth/login").send(user);
+        expect(res.statusCode).toEqual(200);
+        expect(res.body).toHaveProperty("accessToken");
+        expect(res.body).toHaveProperty("refreshToken");
+        user.accessToken = res.body.accessToken;
+        user.refreshToken = res.body.refreshToken;
+        const res2 = yield (0, supertest_1.default)(app).get("/auth/logout")
+            .set("Authorization", "Bearer " + user.refreshToken)
+            .send();
+        expect(res2.statusCode).toEqual(200);
+        const res3 = yield (0, supertest_1.default)(app).get("/auth/refresh")
+            .set("Authorization", "Bearer " + user.refreshToken)
+            .send();
+        expect(res3.statusCode).not.toEqual(200);
     }));
 });
 //# sourceMappingURL=auth.test.js.map
